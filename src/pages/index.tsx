@@ -1,4 +1,5 @@
 import Head from '../../node_modules/next/head'
+import { useRouter } from '../../node_modules/next/router'
 import ImgLogin from '../assets/login.svg'
 import {
     Container,
@@ -10,6 +11,13 @@ import {
 } from '../styles/pages/login'
 
 const Login = () => {
+    const router = useRouter()
+
+    const changePage = (path: string) => {
+        router.push(path)
+    }
+
+
     return (
         <>
             <Head>
@@ -38,7 +46,7 @@ const Login = () => {
                         <Button>Logar</Button>
                         <span>
                             Não possui conta ainda ?
-                            <ButtonSignUp>Cadastre-se</ButtonSignUp>
+                            <ButtonSignUp type='button' onClick={() => changePage('/signup')}>Cadastre-se</ButtonSignUp>
                         </span>
                     </Form>
                 </Section>

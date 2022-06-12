@@ -44,7 +44,7 @@ export const Section = styled.section`
     background-color: #fff;
     width: 95%;
     max-width: 350px;
-    height: 350px;
+    height: 450px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -72,7 +72,7 @@ export const Button = styled.button`
 
     :hover {
         color: #000;
-        box-shadow: inset 0 -100px 0 0 #dfd9d9  ;
+        box-shadow: inset 0 -100px 0 0 #dfd9d9;
     }
 
     :active {
@@ -105,7 +105,7 @@ export const DivInput = styled.div`
     }
 `
 
-export const ButtonSignUp = styled.button`
+export const ButtonLogin = styled.button`
     font-size: 15px;
     border: none;
     margin-left: 5px;
