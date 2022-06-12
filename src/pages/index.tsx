@@ -43,7 +43,7 @@ const Login = () => {
                             <label>Password</label>
                             <input type="text" />
                         </DivInput>
-                        <Button>Logar</Button>
+                        <Button onClick={() => changePage('/dashboard')} type='button'>Logar</Button>
                         <span>
                             Não possui conta ainda ?
                             <ButtonSignUp type='button' onClick={() => changePage('/signup')}>Cadastre-se</ButtonSignUp>
