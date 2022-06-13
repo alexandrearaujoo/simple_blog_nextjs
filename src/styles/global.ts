@@ -40,6 +40,7 @@ export default createGlobalStyle`
         position: relative;
         height: 100vh;
         display: flex;
+        overflow-x: hidden;
     }
     button{
         cursor: pointer;
