@@ -1,10 +1,44 @@
 import Head from '../../node_modules/next/head'
 import { useRouter } from '../../node_modules/next/router'
 import ImgSignUp from '../assets/signup.svg'
-import { Container, Section, DivInput, Form, Button, ButtonLogin } from '../styles/pages/signup'
+import { useUser } from '../contexts/User'
+import * as yup from 'yup'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import {
+    Container,
+    Section,
+    DivInput,
+    Form,
+    Button,
+    ButtonLogin
+} from '../styles/pages/signup'
+
+interface CreateUserProps {
+    username: string
+    email: string
+    avatarUrl: string
+    password: string
+}
 
 const SignUp = () => {
     const router = useRouter()
+    const {createUser} = useUser()
+
+    const signUpSchema = yup.object().shape({
+        username: yup.string().required('Required field'),
+        email: yup.string().email('Invalid email').required('Required field'),
+        avatarUrl: yup.string().required('Required field'),
+        password: yup.string().required('Required field')
+    })
+
+    const {register, handleSubmit, formState: {errors}} = useForm({
+        resolver: yupResolver(signUpSchema)
+    })
+
+    const onSubmit = async (data: CreateUserProps) => {
+        await createUser(data)
+    }
 
     const changePage = (path: string) => {
         router.push(path)
@@ -26,27 +60,32 @@ const SignUp = () => {
             <Container>
                 <ImgSignUp />
                 <Section>
-                    <Form action="">
+                    <Form onSubmit={handleSubmit(onSubmit)}>
                         <DivInput>
-                            <label>Username</label>
-                            <input type="text" />
+                            <label>Username {!!errors && <span>{errors.username?.message}</span>}</label>
+                            <input type="text" {...register('username')}/>
                         </DivInput>
                         <DivInput>
-                            <label>Email</label>
-                            <input type="text" />
+                            <label>Email {!!errors && <span>{errors.email?.message}</span>}</label>
+                            <input type="text" {...register('email')}/>
                         </DivInput>
                         <DivInput>
-                            <label>Avatar URL</label>
-                            <input type="text" />
+                            <label>Avatar URL {!!errors && <span>{errors.avatarUrl?.message}</span>}</label>
+                            <input type="text" {...register('avatarUrl')}/>
                         </DivInput>
                         <DivInput>
-                            <label>Password</label>
-                            <input type="text" />
+                            <label>Password {!!errors && <span>{errors.password?.message}</span>}</label>
+                            <input type="text" {...register('password')}/>
                         </DivInput>
-                        <Button onClick={() => changePage('/')}>Sign Up</Button>
+                        <Button type='submit'>Sign Up</Button>
                         <span>
                             Já possui conta ainda ?
-                            <ButtonLogin onClick={() => changePage('/')} type='button'>Logar</ButtonLogin>
+                            <ButtonLogin
+                                onClick={() => changePage('/')}
+                                type="button"
+                            >
+                                Logar
+                            </ButtonLogin>
                         </span>
                     </Form>
                 </Section>

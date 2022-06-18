@@ -1,5 +1,8 @@
 import Head from '../../node_modules/next/head'
 import { useRouter } from '../../node_modules/next/router'
+import * as yup from 'yup'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import ImgLogin from '../assets/login.svg'
 import {
     Container,
@@ -9,14 +12,37 @@ import {
     DivInput,
     ButtonSignUp
 } from '../styles/pages/login'
+import { useUser } from '../contexts/User'
+
+interface UserLoginProps {
+    email: string
+    password: string
+}
 
 const Login = () => {
     const router = useRouter()
+    const { loginUser } = useUser()
+
+    const loginSchema = yup.object().shape({
+        email: yup.string().email('Invalid email').required('Required field'),
+        password: yup.string().required('Required field')
+    })
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm({
+        resolver: yupResolver(loginSchema)
+    })
+
+    const onSubmit = async (data: UserLoginProps) => {
+        await loginUser(data)
+    }
 
     const changePage = (path: string) => {
         router.push(path)
     }
-
 
     return (
         <>
@@ -34,19 +60,34 @@ const Login = () => {
             <Container>
                 <ImgLogin />
                 <Section>
-                    <Form action="">
+                    <Form onSubmit={handleSubmit(onSubmit)}>
                         <DivInput>
-                            <label>Email</label>
-                            <input type="text" />
+                            <label>
+                                Email
+                                {!!errors && (
+                                    <span>{errors.email?.message}</span>
+                                )}
+                            </label>
+                            <input type="text" {...register('email')} />
                         </DivInput>
                         <DivInput>
-                            <label>Password</label>
-                            <input type="text" />
+                            <label>
+                                Password
+                                {!!errors && (
+                                    <span> {errors.password?.message}</span>
+                                )}
+                            </label>
+                            <input type="password" {...register('password')} />
                         </DivInput>
-                        <Button onClick={() => changePage('/dashboard')} type='button'>Logar</Button>
+                        <Button type="submit">Logar</Button>
                         <span>
                             Não possui conta ainda ?
-                            <ButtonSignUp type='button' onClick={() => changePage('/signup')}>Cadastre-se</ButtonSignUp>
+                            <ButtonSignUp
+                                type="button"
+                                onClick={() => changePage('/signup')}
+                            >
+                                Cadastre-se
+                            </ButtonSignUp>
                         </span>
                     </Form>
                 </Section>

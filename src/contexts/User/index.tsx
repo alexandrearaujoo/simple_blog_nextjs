@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { createContext, useState, useContext } from 'react'
 import { useRouter } from '../../../node_modules/next/router'
 import toast from '../../../node_modules/react-hot-toast/dist/index'
@@ -8,6 +9,13 @@ interface CreateUserProps {
     email: string
     avatarUrl: string
     password: string
+}
+
+interface User {
+    id: string
+    username: string
+    avatarUrl: string
+    email: string
 }
 
 interface UserData {
@@ -22,8 +30,10 @@ interface LoginUserProps {
 
 interface UserContextData {
     userData: UserData
+    user: User
     createUser: (data: CreateUserProps) => Promise<void>
     loginUser: (data: LoginUserProps) => Promise<void>
+    getUser: (id: string, token: string) => Promise<void>
     logout: () => void
 }
 
@@ -31,15 +41,16 @@ const UserContext = createContext<UserContextData>({} as UserContextData)
 
 
 export const UserProvider = ({children}) => {
-    const [userData, setUserData] = useState(() => {
-        const data = localStorage.getItem('@UserAuth')
+    const [userData, setUserData] = useState<UserData>()
+    const [user, setUser] = useState<User>()
+
+    useEffect(() => {
+        const data = localStorage.getItem("@UserData")
 
         if (data) {
-            return JSON.parse(data)
+            setUserData(JSON.parse(data))
         }
-
-        return {}
-    })
+    },[])
 
     const route = useRouter()
 
@@ -65,12 +76,20 @@ export const UserProvider = ({children}) => {
 
     const logout = () => {
         localStorage.clear()
-        setUserData({})
         route.push('/')
     }
 
+    const getUser = async (id: string, token: string) => {
+         await api.get(`/user/${id}`, { headers: {
+            'Authorization': `Bearer ${token}`
+        }})
+        .then(res => setUser(res.data))
+        .catch(err => console.log(err))
+
+    }
+
     return (
-        <UserContext.Provider value={{createUser, loginUser, logout, userData}}>
+        <UserContext.Provider value={{createUser, loginUser,getUser,logout, userData, user}}>
             {children}
         </UserContext.Provider>
     )
