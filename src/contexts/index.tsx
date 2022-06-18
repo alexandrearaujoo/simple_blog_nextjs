@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { PostProvider } from './Post'
 import { UserProvider } from './User/index'
 
 interface ProviderProps {
@@ -8,7 +9,7 @@ interface ProviderProps {
 const Provider = ({ children }: ProviderProps) => {
     return (
         <UserProvider>
-            {children}
+            <PostProvider>{children}</PostProvider>
         </UserProvider>
     )
 }
