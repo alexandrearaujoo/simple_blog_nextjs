@@ -17,7 +17,6 @@ import {
     TextArea,
     Ul
 } from '../styles/pages/dashboard'
-import toast from 'react-hot-toast'
 import { useState } from 'react'
 
 interface PostProps {
@@ -28,6 +27,7 @@ const DashBoard = () => {
     const { getUser, user,userData,logout } = useUser()
     const { getAllPosts, posts, createPost } = usePost()
     const [page, setPage] = useState(1)
+
 
     const postSchema = yup.object().shape({
         content: yup.string().max(100, 'Maximum of 100 characters').required('Invalid publication')
@@ -50,6 +50,7 @@ const DashBoard = () => {
             setPage(page - 1)
         }
     }
+
 
     useEffect(() => {
         const { userId, token } = JSON.parse(localStorage.getItem('@UserData'))
@@ -91,6 +92,7 @@ const DashBoard = () => {
                     ) : (
                         <Loading />
                     )}
+
                     <button onClick={nextPage}>Next</button>
                     <button onClick={previousPage}>Previous</button>
                 </>
