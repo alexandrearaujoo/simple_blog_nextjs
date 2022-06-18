@@ -10,8 +10,28 @@ interface UpdatePost {
     newContent: string
 }
 
+interface Owner {
+    id: string
+    username: string
+    avatarUrl: string
+}
+
+interface Post {
+    id: string
+    post: string
+    owner: Owner
+}
+
+interface Response {
+    page: number
+    privoulousPage:string
+    nextPage: string
+    lastPage: number
+    data: Post[]
+}
+
 interface PostContextData {
-    posts: string[]
+    posts: Response
     getAllPosts: (token: string, page: string) => Promise<void>
     createPost: (token: string, content: CreatePost) => Promise<void>
     updatePost: (
@@ -25,7 +45,7 @@ interface PostContextData {
 const PostContext = createContext<PostContextData>({} as PostContextData)
 
 export const PostProvider = ({ children }) => {
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState<Response>()
 
     const getAllPosts = async (token: string, page = '1') => {
         const { data } = await api.get(`/post?page=${page}`, {
@@ -44,8 +64,8 @@ export const PostProvider = ({ children }) => {
                 }
             })
             .then(_ => {
-                getAllPosts(token)
                 toast.success('Post published')
+                getAllPosts(token)
             })
             .catch(err => toast.error(err.response.data.message))
     }

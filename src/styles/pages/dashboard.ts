@@ -17,7 +17,7 @@ export const AvatarUrl = styled.img`
 
 export const ButtonLogout = styled.button``
 
-export const Section = styled.section`
+export const Form = styled.form`
     width: 100%;
     display: flex;
     justify-content: center;
@@ -30,8 +30,11 @@ export const Main = styled.main``
 
 export const TextArea = styled.textarea`
     width: 95%;
+    min-width: 304px;
     max-width: 500px;
     height: 100px;
+    min-height: 100px;
+    max-height: 100px;
     padding: 5px;
 
     border-radius: 8px;

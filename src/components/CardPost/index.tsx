@@ -1,3 +1,5 @@
+import { useUser } from '../../contexts/User'
+import { FaTrash, FaEdit } from 'react-icons/fa'
 import {
     Container,
     PostUser,
@@ -8,25 +10,28 @@ import {
     DivImg
 } from './style'
 
-const CardPost = () => {
+const CardPost = ({ post }) => {
+    const { userData } = useUser()
+
     return (
         <Container>
             <DivImg>
-                <ImgUser src="https://media.istockphoto.com/vectors/profile-placeholder-image-gray-silhouette-no-photo-vector-id1016744004" />
+                <ImgUser src={post.owner.avatarUrl} />
             </DivImg>
             <DivUser>
-                <NameUser>Alexandre Araujo</NameUser>
-                <PostUser>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Deleniti error modi nulla. Totam dicta quae fuga, optio
-                    culpa, obcaecati autem deleniti ipsum commodi cum sit animi
-                    impedit molestias nisi tenetur.
-                </PostUser>
+                <NameUser>{post.owner.username}</NameUser>
+                <PostUser>{post.post}</PostUser>
             </DivUser>
-            <DivButtons>
-                <button>Del</button>
-                <button>Up</button>
-            </DivButtons>
+            {userData.userId === post.owner.id && (
+                <DivButtons>
+                    <button>
+                        <FaTrash />
+                    </button>
+                    <button>
+                        <FaEdit />
+                    </button>
+                </DivButtons>
+            )}
         </Container>
     )
 }
