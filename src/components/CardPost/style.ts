@@ -24,14 +24,14 @@ export const NameUser = styled.h2`
     font-size: 0.8rem;
     text-align: start;
 
-    @media screen and (min-width: 1024px){
+    @media screen and (min-width: 1024px) {
         font-size: 0.9rem;
     }
 `
 export const PostUser = styled.p`
     font-size: 0.7rem;
 
-    @media screen and (min-width: 1024px){
+    @media screen and (min-width: 1024px) {
         font-size: 0.9rem;
     }
 `
@@ -41,7 +41,6 @@ export const DivUser = styled.div`
     flex-direction: column;
     height: 100%;
     justify-content: space-around;
-
 `
 export const DivButtons = styled.div`
     height: 100%;
@@ -53,4 +52,47 @@ export const DivImg = styled.div`
     height: 100%;
     display: flex;
     align-items: flex-start;
+`
+export const InputContainer = styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+    > textarea {
+        resize: none;
+        height: 50px;
+        padding: 5px;
+        width: 90%;
+        border-radius: 8px;
+        border: 1px solid #19bdcf;
+
+        :focus {
+            outline-color: #19bdcf;
+        }
+    }
+
+    > button {
+
+    }
+`
+export const ButtonDelete = styled.button`
+    background-color: transparent;
+    border: none;
+    color: #f12f12;
+    transition: 0.5s;
+
+    :hover {
+        color: #760202;
+    }
+`
+export const ButtonUpdate = styled.button`
+    background-color: transparent;
+    border: none;
+    color: #19bdcf;
+    transition: 0.5s;
+
+    :hover {
+        color: #148F9C;
+    }
 `

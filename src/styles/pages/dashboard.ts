@@ -15,7 +15,13 @@ export const AvatarUrl = styled.img`
     border-radius: 50%;
 `
 
-export const ButtonLogout = styled.button``
+export const ButtonLogout = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 1.5rem;
+    width: 5rem;
+`
 
 export const Form = styled.form`
     width: 100%;

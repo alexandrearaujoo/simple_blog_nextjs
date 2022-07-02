@@ -7,13 +7,18 @@ import {
     ImgUser,
     DivUser,
     DivButtons,
-    DivImg
+    DivImg,
+    InputContainer,
+    ButtonDelete,
+    ButtonUpdate
 } from './style'
 import { useState } from 'react'
-import ModalUpdate from '../ModalUpdate'
+import { usePost } from '../../contexts/Post'
 
 const CardPost = ({ post }) => {
     const { userData } = useUser()
+    const { updatePost, deletePost } = usePost()
+    const [newContent, setNewContent] = useState<string>('')
     const [showModalUpdate, setShowModalUpdate] = useState(false)
     const [showModalDelete, setShowModalDelete] = useState(false)
 
@@ -32,20 +37,47 @@ const CardPost = ({ post }) => {
                 </DivImg>
                 <DivUser>
                     <NameUser>{post.owner.username}</NameUser>
-                    <PostUser>{post.post}</PostUser>
+                    {showModalUpdate ? (
+                        <InputContainer>
+                            <textarea
+                                defaultValue={post.post}
+                                onChange={e => setNewContent(e.target.value)}
+                                onKeyPress={e => {
+                                    if (e.key === 'Enter') {
+                                        updatePost(userData.token, post.id, {
+                                            newContent
+                                        })
+                                        openModalUpdate()
+                                    }
+                                }}
+                            />
+                            <button
+                                onClick={() =>
+                                    updatePost(userData.token, post.id, {
+                                        newContent
+                                    }) && openModalUpdate()
+                                }
+                            >
+                                Editar
+                            </button>
+                        </InputContainer>
+                    ) : (
+                        <PostUser>{post.post}</PostUser>
+                    )}
                 </DivUser>
-                {userData.userId === post.owner.id && (
+                {userData.userId === post.owner.id ? (
                     <DivButtons>
-                        <button>
+                        <ButtonDelete onClick={() => deletePost(userData.token, post.id)}>
                             <FaTrash />
-                        </button>
-                        <button onClick={openModalUpdate}>
+                        </ButtonDelete>
+                        <ButtonUpdate onClick={openModalUpdate}>
                             <FaEdit />
-                        </button>
+                        </ButtonUpdate>
                     </DivButtons>
+                ) : (
+                    <DivButtons />
                 )}
             </Container>
-            {showModalUpdate && <ModalUpdate />}
         </>
     )
 }

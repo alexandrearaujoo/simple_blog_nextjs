@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import {BiLogOut} from 'react-icons/bi'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -24,16 +25,23 @@ interface PostProps {
 }
 
 const DashBoard = () => {
-    const { getUser, user,userData,logout } = useUser()
+    const { getUser, user, userData, logout } = useUser()
     const { getAllPosts, posts, createPost } = usePost()
     const [page, setPage] = useState(1)
 
-
     const postSchema = yup.object().shape({
-        content: yup.string().max(100, 'Maximum of 100 characters').required('Invalid publication')
+        content: yup
+            .string()
+            .max(100, 'Maximum of 100 characters')
+            .required('Invalid publication')
     })
 
-    const {register, handleSubmit,reset, formState: {errors}} = useForm({
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors }
+    } = useForm({
         resolver: yupResolver(postSchema)
     })
 
@@ -51,54 +59,53 @@ const DashBoard = () => {
         }
     }
 
-
     useEffect(() => {
         const { userId, token } = JSON.parse(localStorage.getItem('@UserData'))
         getUser(userId, token)
         getAllPosts(token, page.toString())
     }, [page])
 
+    if (!user) {
+        return <Loading />
+    }
+
+    if (!posts) {
+        return <Loading />
+    }
+
     return (
         <>
-            {user !== undefined ? (
-                <>
-                    <Head>
-                        <title>DashBoard</title>
-                        <link
-                            rel="icon"
-                            href="https://cdn-icons-png.flaticon.com/512/3959/3959542.png"
-                        />
-                    </Head>
-                    <Header>
-                        <AvatarUrl src={user.avatarUrl} />
-                        <h2>{user.username}</h2>
-                        <ButtonLogout type="button" onClick={logout}>
-                            Logout
-                        </ButtonLogout>
-                    </Header>
-                    <Form onSubmit={handleSubmit(onSubmit)}>
-                        <TextArea placeholder="Post your message..." {...register('content')}/>
-                        <ButtonPost type='submit'>Post</ButtonPost>
-                    </Form>
+            <Head>
+                <title>DashBoard</title>
+                <link
+                    rel="icon"
+                    href="https://cdn-icons-png.flaticon.com/512/3959/3959542.png"
+                />
+            </Head>
+            <Header>
+                <AvatarUrl src={user.avatarUrl} />
+                <h2>{user.username}</h2>
+                <ButtonLogout type="button" onClick={logout}>
+                   <BiLogOut /> Logout
+                </ButtonLogout>
+            </Header>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <TextArea
+                    placeholder="Post your message..."
+                    {...register('content')}
+                />
+                <ButtonPost type="submit">Post</ButtonPost>
+            </Form>
+            <Main>
+                <Ul>
+                    {posts.data.map(post => (
+                        <CardPost key={post.id} post={post} />
+                    ))}
+                </Ul>
+            </Main>
 
-                    {posts.data !== undefined ? (
-                        <Main>
-                            <Ul>
-                                {posts.data.map(post => (
-                                    <CardPost key={post.id} post={post}/>
-                                ))}
-                            </Ul>
-                        </Main>
-                    ) : (
-                        <Loading />
-                    )}
-
-                    <button onClick={nextPage}>Next</button>
-                    <button onClick={previousPage}>Previous</button>
-                </>
-            ) : (
-                <Loading />
-            )}
+            <button onClick={nextPage}>Next</button>
+            <button onClick={previousPage}>Previous</button>
         </>
     )
 }

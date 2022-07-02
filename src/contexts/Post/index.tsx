@@ -78,12 +78,12 @@ export const PostProvider = ({ children }) => {
         await api
             .patch(`post/${postId}`, newContent, {
                 headers: {
-                    Authotization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
             .then(_ => {
-                getAllPosts(token)
                 toast.success('Updated post')
+                getAllPosts(token)
             })
             .catch(err => toast.error(err.response.data.message))
     }
@@ -96,8 +96,8 @@ export const PostProvider = ({ children }) => {
                 }
             })
             .then(_ => {
-                getAllPosts(token)
                 toast.success('Deleted post')
+                getAllPosts(token)
             })
             .catch(err => toast.error(err.response.data.message))
     }
