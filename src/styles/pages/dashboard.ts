@@ -31,6 +31,16 @@ export const Form = styled.form`
     flex-direction: column;
 
     margin-top: 10px;
+
+    > div {
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        background-color: #fff;
+
+        border-radius: 8px;
+        border: 1px solid #19bdcf;
+    }
 `
 export const Main = styled.main``
 
@@ -42,12 +52,12 @@ export const TextArea = styled.textarea`
     min-height: 100px;
     max-height: 100px;
     padding: 5px;
-
-    border-radius: 8px;
-    border: 1px solid #19bdcf;
+    resize: none;
+    border: none;
+    background-color: transparent;
 
     :focus {
-        outline-color: #19bdcf;
+        outline: none;
     }
 `
 

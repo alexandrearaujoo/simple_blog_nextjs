@@ -90,11 +90,13 @@ const DashBoard = () => {
                 </ButtonLogout>
             </Header>
             <Form onSubmit={handleSubmit(onSubmit)}>
+                <div>
                 <TextArea
                     placeholder="Post your message..."
                     {...register('content')}
                 />
                 <ButtonPost type="submit">Post</ButtonPost>
+                </div>
             </Form>
             <Main>
                 <Ul>
