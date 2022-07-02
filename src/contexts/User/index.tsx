@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { createContext, useState, useContext } from 'react'
-import { useRouter } from '../../../node_modules/next/router'
-import toast from '../../../node_modules/react-hot-toast/dist/index'
+import { useRouter } from 'next/router'
+import toast from 'react-hot-toast'
 import api from '../../services/api'
 
 interface CreateUserProps {

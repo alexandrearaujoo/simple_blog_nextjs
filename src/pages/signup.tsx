@@ -1,5 +1,5 @@
-import Head from '../../node_modules/next/head'
-import { useRouter } from '../../node_modules/next/router'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 import ImgSignUp from '../assets/signup.svg'
 import { useUser } from '../contexts/User'
 import * as yup from 'yup'

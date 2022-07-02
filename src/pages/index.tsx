@@ -1,5 +1,5 @@
-import Head from '../../node_modules/next/head'
-import { useRouter } from '../../node_modules/next/router'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
