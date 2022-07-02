@@ -1,5 +1,6 @@
 import { useUser } from '../../contexts/User'
 import { FaTrash, FaEdit } from 'react-icons/fa'
+import { HiOutlinePencil } from 'react-icons/hi'
 import {
     Container,
     PostUser,
@@ -10,7 +11,8 @@ import {
     DivImg,
     InputContainer,
     ButtonDelete,
-    ButtonUpdate
+    ButtonUpdate,
+    ButtonEdit
 } from './style'
 import { useState } from 'react'
 import { usePost } from '../../contexts/Post'
@@ -20,13 +22,9 @@ const CardPost = ({ post }) => {
     const { updatePost, deletePost } = usePost()
     const [newContent, setNewContent] = useState<string>('')
     const [showModalUpdate, setShowModalUpdate] = useState(false)
-    const [showModalDelete, setShowModalDelete] = useState(false)
 
     const openModalUpdate = () => {
         setShowModalUpdate(!showModalUpdate)
-    }
-    const openModalDelete = () => {
-        setShowModalDelete(!showModalDelete)
     }
 
     return (
@@ -51,15 +49,15 @@ const CardPost = ({ post }) => {
                                     }
                                 }}
                             />
-                            <button
+                            <ButtonEdit
                                 onClick={() =>
                                     updatePost(userData.token, post.id, {
                                         newContent
                                     }) && openModalUpdate()
                                 }
                             >
-                                Editar
-                            </button>
+                                <HiOutlinePencil /> Editar
+                            </ButtonEdit>
                         </InputContainer>
                     ) : (
                         <PostUser>{post.post}</PostUser>
@@ -67,7 +65,9 @@ const CardPost = ({ post }) => {
                 </DivUser>
                 {userData.userId === post.owner.id ? (
                     <DivButtons>
-                        <ButtonDelete onClick={() => deletePost(userData.token, post.id)}>
+                        <ButtonDelete
+                            onClick={() => deletePost(userData.token, post.id)}
+                        >
                             <FaTrash />
                         </ButtonDelete>
                         <ButtonUpdate onClick={openModalUpdate}>

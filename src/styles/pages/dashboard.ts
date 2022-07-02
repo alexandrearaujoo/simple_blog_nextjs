@@ -7,6 +7,11 @@ export const Header = styled.header`
     display: flex;
     justify-content: space-around;
     align-items: center;
+
+    h2 {
+        text-transform: uppercase;
+        font-family: 'Roboto', sans-serif;
+    }
 `
 
 export const AvatarUrl = styled.img`
@@ -21,6 +26,17 @@ export const ButtonLogout = styled.button`
     justify-content: space-evenly;
     height: 1.5rem;
     width: 5rem;
+    background-color: transparent;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    transition: 0.5s;
+
+    :hover {
+        svg {
+            transition: 0.5s;
+            color: #f12f12;
+        }
+    }
 `
 
 export const Form = styled.form`
@@ -29,15 +45,13 @@ export const Form = styled.form`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
     margin-top: 10px;
+    margin-bottom: 10px;
 
-    > div {
-        width: 100%;
-        display: flex;
-        align-items: flex-end;
+    div {
         background-color: #fff;
-
+        width: 95%;
+        max-width: 500px;
         border-radius: 8px;
         border: 1px solid #19bdcf;
     }
@@ -101,6 +115,78 @@ export const ButtonPost = styled.button`
 
         60% {
             transform: translateY(-5px);
+        }
+    }
+`
+
+export const ChangePageContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    width: 230px;
+    margin: 0 auto;
+`
+
+export const ButtonPrev = styled.button`
+    display: flex;
+    height: 3em;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    background-color: #eeeeee4b;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    border: none;
+    background: #fff;
+
+    > svg {
+        margin-right: 5px;
+        margin-left: 5px;
+        font-size: 20px;
+        transition: all 0.4s ease-in;
+    }
+
+    :hover {
+        box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+        transform: translateY(-2px);
+
+        > svg {
+            font-size: 1.2em;
+            transform: translateX(-5px);
+        }
+    }
+`
+export const ButtonNext = styled.button`
+    display: flex;
+    height: 3em;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    background-color: #eeeeee4b;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    border: none;
+    background: #fff;
+
+    > svg {
+        margin-right: 5px;
+        margin-left: 5px;
+        font-size: 20px;
+        transition: all 0.4s ease-in;
+    }
+
+    :hover {
+        box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+        transform: translateY(2px);
+
+        > svg {
+            font-size: 1.2em;
+            transform: translateX(5px);
         }
     }
 `

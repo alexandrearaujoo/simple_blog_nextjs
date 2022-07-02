@@ -21,6 +21,7 @@ export const ImgUser = styled.img`
     border-radius: 50%;
 `
 export const NameUser = styled.h2`
+    text-transform: capitalize;
     font-size: 0.8rem;
     text-align: start;
 
@@ -72,8 +73,8 @@ export const InputContainer = styled.div`
         }
     }
 
-    > button {
-
+    @media (max-width: 500px) {
+        flex-direction: column;
     }
 `
 export const ButtonDelete = styled.button`
@@ -93,6 +94,35 @@ export const ButtonUpdate = styled.button`
     transition: 0.5s;
 
     :hover {
-        color: #148F9C;
+        color: #148f9c;
+    }
+`
+export const ButtonEdit = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to top, #30cfd0 0%, #148f9c 100%);
+    border: solid 3px transparent;
+    background-clip: padding-box;
+    box-shadow: 0px 0px 0px 3px #ffffff00;
+    color: #fff;
+    width: 110px;
+    min-height: 30px;
+    margin-left: 5px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+
+    :active {
+        transform: scale(0.9);
+        transition: all 100ms ease;
+    }
+
+    :hover {
+        box-shadow: 0px 0px 0px 3px #30a1b8;
+    }
+
+    > svg {
+        width: 16px;
     }
 `

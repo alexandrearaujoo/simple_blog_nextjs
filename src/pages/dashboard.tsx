@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import {BiLogOut} from 'react-icons/bi'
+import { BiLogOut } from 'react-icons/bi'
+import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -16,7 +17,10 @@ import {
     Main,
     Form,
     TextArea,
-    Ul
+    Ul,
+    ChangePageContainer,
+    ButtonPrev,
+    ButtonNext
 } from '../styles/pages/dashboard'
 import { useState } from 'react'
 
@@ -81,21 +85,27 @@ const DashBoard = () => {
                     rel="icon"
                     href="https://cdn-icons-png.flaticon.com/512/3959/3959542.png"
                 />
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" />
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
+                    rel="stylesheet"
+                />
             </Head>
             <Header>
                 <AvatarUrl src={user.avatarUrl} />
                 <h2>{user.username}</h2>
                 <ButtonLogout type="button" onClick={logout}>
-                   <BiLogOut /> Logout
+                    <BiLogOut /> Logout
                 </ButtonLogout>
             </Header>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                <TextArea
-                    placeholder="Post your message..."
-                    {...register('content')}
-                />
-                <ButtonPost type="submit">Post</ButtonPost>
+                    <TextArea
+                        placeholder="Post your message..."
+                        {...register('content')}
+                    />
+                    <ButtonPost type="submit">Post</ButtonPost>
                 </div>
             </Form>
             <Main>
@@ -105,9 +115,15 @@ const DashBoard = () => {
                     ))}
                 </Ul>
             </Main>
-
-            <button onClick={nextPage}>Next</button>
-            <button onClick={previousPage}>Previous</button>
+            <ChangePageContainer>
+                <ButtonPrev onClick={previousPage}>
+                    {' '}
+                    <FaLongArrowAltLeft /> Prev
+                </ButtonPrev>
+                <ButtonNext onClick={nextPage}>
+                    Next <FaLongArrowAltRight />
+                </ButtonNext>
+            </ChangePageContainer>
         </>
     )
 }
